@@ -1,0 +1,69 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <script src="lib/jquery-1.9.1.js"></script>
+    <script src="lib/handlebars-1.0.0.js"></script>
+    <script src="lib/ember-1.1.2.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap.css">
+
+    <link rel="stylesheet" href="app.css">
+    <script src="app.js"></script>
+</head>
+<body>
+<script type="text/x-handlebars" data-template-name="application">
+    <h1> The CageBook </h1>
+    {{outlet}}
+</script>
+<script type="text/x-handlebars" data-template-name="index">
+    {{#link-to 'create' classNames='btn btn-primary'}}Create{{/link-to}}
+    {{#each hamster in names}}
+        <div class="hamster" {{action "hamsterClick" hamster}}>
+            <img {{bindAttr src="hamster.imageSrc"}}></img>
+            <div class="info">
+                <h4 {{bindAttr class="hamster.mood"}}>
+                    {{hamster.firstName}}&nbsp;{{uppercase hamster.lastName}}
+                </h4>
+                <span class="status">{{hamster.attitude}}</span>
+            </div>
+        </div>
+    {{/each}}
+</script>
+<script type="text/x-handlebars" data-template-name="hamster">
+    {{#link-to 'index' classNames='btn btn-primary'}}Back{{/link-to}}
+    <div class="hamster">
+            <img {{bindAttr src="imageSrc"}}></img>
+            <div class="info">
+                <h4 {{bindAttr class="mood"}}>
+                    {{firstName}}&nbsp;{{uppercase lastName}}
+                </h4>
+                <span class="status">{{attitude}}</span>
+                {{view App.PokeClickView}}
+                <button {{action edit}} class="btn btn-info">Edit</button>
+            </div>
+    </div>
+    {{outlet}}
+</script>
+<script type="text/x-handlebars" data-template-name="create">
+    <div class="hamsterCreate">
+        <label>First Name:</label>
+        {{input value=model.firstName}} 
+
+        <label>Last Name:</label>
+        {{input value=model.lastName}}
+
+        <label>Attitude:</label>
+        {{input value=model.attitude}}
+        </br>
+        <button class="btn btn-primary" {{action "hamsterDone"}}>Done</button>
+    </div>
+</script>
+</body>
+
+</html>
